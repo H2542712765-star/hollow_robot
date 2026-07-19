@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <!-- 公共惯性属性宏定义 -->
+
+    <xacro:macro name="box_inertia" params="m w h d">
+        <inertial>
+            <mass value="${float(m)}"/>
+            <inertia
+                ixx="${float(m)/12.0 * (float(h)*float(h) + float(d)*float(d))}"
+                ixy="0.0"
+                ixz="0.0"
+                iyy="${float(m)/12.0 * (float(w)*float(w) + float(d)*float(d))}"
+                iyz="0.0"
+                izz="${float(m)/12.0 * (float(w)*float(w) + float(h)*float(h))}"/>
+        </inertial>
+    </xacro:macro>
+
+    <xacro:macro name="cylinder_inertia" params="m r h">
+        <inertial>
+            <mass value="${float(m)}"/>
+            <inertia
+                ixx="${float(m)/12.0 * (3.0*float(r)*float(r) + float(h)*float(h))}"
+                ixy="0.0"
+                ixz="0.0"
+                iyy="${float(m)/12.0 * (3.0*float(r)*float(r) + float(h)*float(h))}"
+                iyz="0.0"
+                izz="${float(m)/2.0 * float(r)*float(r)}"/>
+        </inertial>
+    </xacro:macro>
+
+    <xacro:macro name="sphere_inertia" params="m r">
+        <inertial>
+            <mass value="${float(m)}"/>
+            <inertia
+                ixx="${2.0/5.0 * float(m)*float(r)*float(r)}"
+                ixy="0.0"
+                ixz="0.0"
+                iyy="${2.0/5.0 * float(m)*float(r)*float(r)}"
+                iyz="0.0"
+                izz="${2.0/5.0 * float(m)*float(r)*float(r)}"/>
+        </inertial>
+    </xacro:macro>
+</robot>

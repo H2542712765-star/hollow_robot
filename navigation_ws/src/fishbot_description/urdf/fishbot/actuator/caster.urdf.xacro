@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="caster_xacro" params="caster_name xyz">
+        <link name="${caster_name}_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.072"/>
+                </geometry>
+                <material name="black"/>
+            </visual>
+            <!-- 碰撞属性 -->
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                    <geometry>
+                        <sphere radius="0.072"/>
+                    </geometry>                
+            </collision>
+            <xacro:sphere_inertia m="0.12" r="0.072" />
+        </link>
+        <joint name="${caster_name}_joint" type="fixed">
+            <parent link="base_link"/>
+            <child link="${caster_name}_link"/>
+            <origin xyz="${xyz}" rpy="0 0 0"/>
+        </joint>
+        
+        <gazebo reference="${caster_name}_link">
+            <!-- 沿轮子滚动方向的摩擦系数（纵向摩擦） -->
+            <mu1 value="0.0"/>
+            <!-- 垂直于轮子滚动方向的摩擦系数（横向摩擦） -->
+            <mu2 value="0.0"/>
+            <!-- 法向刚度 -->
+            <k1 value="0"/>
+            <!-- 切向刚度 -->
+            <k2 value="0"/>
+        </gazebo>
+
+
+    </xacro:macro> 
+</robot>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<robot
+  name="fishbot_cr10"
+  xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- 加载车底盘 -->
+  <xacro:include
+    filename="$(find fishbot_description)/urdf/fishbot/fishbot.urdf.xacro"/>
+
+  <!-- 加载CR10宏 -->
+  <xacro:include
+    filename="$(find cr10_description)/urdf/cr10_robot.urdf.xacro"/>
+
+  <!-- 将CR10安装到底盘base_link -->
+  <xacro:cr10_robot parent="base_link">
+    <origin xyz="0 0 0.06" rpy="0 0 0"/>
+  </xacro:cr10_robot>
+
+</robot>
