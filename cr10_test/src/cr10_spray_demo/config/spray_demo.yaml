@@ -1,0 +1,69 @@
+cr10_spray_demo:
+  ros__parameters:
+    # Verified live TF chain:
+    # world -> dummy_link -> base_link -> Link1 -> ... -> Link6
+    planning_group: cr10_group
+    planning_frame: dummy_link
+    tool_link: Link6
+    move_action_name: /move_action
+    pilz_pipeline_id: pilz_industrial_motion_planner
+    approach_planner_id: PTP
+    linear_planner_id: LIN
+
+    # Gazebo still starts at 0,0,0,0,0,0. Before generating a LIN raster,
+    # move away from that singular configuration in joint space.
+    move_to_ready_state: true
+    ready_joint_names:
+      - joint1
+      - joint2
+      - joint3
+      - joint4
+      - joint5
+      - joint6
+    ready_joint_positions: [0.0, 0.3296, -1.3436, -0.3643, 1.6134, 0.0]
+    ready_joint_tolerance: 0.01
+
+    # Gazebo/TF startup handling.
+    startup_delay: 1.0
+    move_group_timeout: 30.0
+    require_single_move_action_server: true
+    tf_timeout: 30.0
+    log_tf_tree_on_start: true
+
+    # Small first-test raster in the Y-Z plane; X remains constant.
+    horizontal_axis: "y"
+    vertical_axis: "z"
+    center_offset_x: 0.0
+    center_offset_y: 0.0
+    center_offset_z: 0.0
+    raster_width: 0.04
+    raster_height: 0.03
+    row_spacing: 0.015
+    max_pattern_extent: 0.20
+    max_row_count: 20
+
+    # Conservative motion limits for Gazebo validation.
+    ptp_velocity_scaling: 0.05
+    ptp_acceleration_scaling: 0.05
+    lin_velocity_scaling: 0.03
+    lin_acceleration_scaling: 0.03
+    allowed_planning_time: 10.0
+    planning_attempts: 3
+    position_tolerance: 0.01
+    orientation_tolerance: 0.05
+    goal_send_timeout: 10.0
+    motion_result_timeout: 120.0
+    settle_time: 0.50
+    return_to_start: true
+    return_to_start_on_failure: false
+
+    # Add a Marker display in RViz and select /spray_path_preview.
+    publish_path_preview: true
+    preview_topic: /spray_path_preview
+    preview_line_width: 0.006
+
+    # Keep false until an independently tested IO/PLC bridge is connected.
+    publish_spray_command: false
+    spray_topic: /spray_enable
+    spray_on_delay: 0.10
+    spray_off_delay: 0.10
